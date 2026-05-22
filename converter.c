@@ -8,7 +8,6 @@ void unitConverter(int, int);
 int main(void){
     int choice1;
     int choice2 = 0;
-    double convertedUnit;
     do{
         choice1 = mainMenu();
         if(choice1 == 5){
@@ -16,6 +15,7 @@ int main(void){
             return 0;
         }
         choice2 = subMenu(choice1);
+        unitConverter(choice1, choice2);
     }while (choice1 != 5);
 return 0;
 }
@@ -38,7 +38,7 @@ int mainMenu(){
     return selection;
 }
 int subMenu(int choice1){
-    int selection2;
+    int selection2 = 0;
     switch (choice1){
         case 1:
             do{
@@ -52,7 +52,7 @@ int subMenu(int choice1){
                 }
             }while(selection2 != 1 && selection2 != 2);
             
-            return selection2;
+            break;
         case 2:
             do{
                 printf("--- Distance ---\n");
@@ -65,7 +65,7 @@ int subMenu(int choice1){
                 }
             }while(selection2 != 1 && selection2 != 2);
             
-            return selection2;
+            break;
         case 3:
             do{
                 printf("--- Weight ---\n");
@@ -78,7 +78,7 @@ int subMenu(int choice1){
                 }
             }while(selection2 != 1 && selection2 != 2);
             
-            return selection2;
+            break;
         case 4:
             do{
                 printf("--- Speed ---\n");
@@ -90,56 +90,66 @@ int subMenu(int choice1){
                     printf("Invalid direction. Try again.\n");
                 }
             }while(selection2 != 1 && selection2 != 2);
-            
-            return selection2;
-            
+            break;
     }
+    return selection2;
 }
 void unitConverter(int choice1, int choice2){
-    double units;
-    double convertedUnits;
+    float units;
+    float convertedUnits;
     switch (choice1){
         case 1:
             if (choice2 == 1){
                 printf("Enter degrees in Celsius: \n");
-                fscanf(stdin, "%d", &units);
+                fscanf(stdin, "%f", &units);
                 convertedUnits = (units * (9.0/5.0) + 32);
-                printf("")
+                printf("%.2f \xb0 Celsius is %.2f \xb0 Fahrenheit. \n", units, convertedUnits);
             }else{
                 printf("Enter degrees in Fahrenheit: \n");
-                fscanf(stdin, "%d", &units);
-                return ((units - 32) * (5.0/9.0));
+                fscanf(stdin, "%f", &units);
+                convertedUnits = ((units - 32) * (5.0/9.0));
+                printf("%.2f \xb0 Fahrenheit is %.2f \xb0 Celsius.\n", units, convertedUnits);
             }
+            break;
         case 2:
             if (choice2 == 1){
                 printf("Enter amount of Miles: \n");
-                fscanf(stdin, "%d", &units);
-                return (units * 1.60934);
+                fscanf(stdin, "%f", &units);
+                convertedUnits = (units * 1.60934);
+                printf("%.2f Miles is %.2f Kilometers.\n", units, convertedUnits);
             }else{
                 printf("Enter amount of Kilometers: \n");
-                fscanf(stdin, "%d", &units);
-                return (units / 1.60934);
+                fscanf(stdin, "%f", &units);
+                convertedUnits = (units / 1.60934);
+                printf("%.2f Kilometers is %.2f Miles.\n", units, convertedUnits);
             }
+            break;
         case 3:
             if (choice2 == 1){
                 printf("Enter amount of Pounds: \n");
-                fscanf(stdin, "%d", &units);
-                return (units * 0.453592);
+                fscanf(stdin, "%f", &units);
+                convertedUnits = (units * 0.453592);
+                printf("%.2f Pounds is %.2f Kilograms.\n", units, convertedUnits);
             }else{
                 printf("Enter amount of Kilograms: \n");
-                fscanf(stdin, "%d", &units);
-                return (units / 0.453592);
+                fscanf(stdin, "%f", &units);
+                convertedUnits = (units / 0.453592);
+                printf("%.2f Kilograms is %.2f Pounds.\n", units, convertedUnits);
             }
+            break;
         case 4:        
             if (choice2 == 1){
                 printf("Enter MPH: \n");
-                fscanf(stdin, "%d", &units);
-                return (units * 1.60934);
+                fscanf(stdin, "%f", &units);
+                convertedUnits = (units * 1.60934);
+                printf("%.2f MPH is %.2f KPH.\n", units, convertedUnits);
             }else{
                 printf("Enter KPH: \n");
-                fscanf(stdin, "%d", &units);
-                return (units / 1.60934);
+                fscanf(stdin, "%f", &units);
+                convertedUnits = (units / 1.60934);
+                printf("%.2f KPH is %.2f MPH.\n", units, convertedUnits);
             }
+            break;
     }   
     
 }
