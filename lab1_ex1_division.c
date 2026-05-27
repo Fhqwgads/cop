@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-void main(){
+int main(){
 
     printf("7/2: my prediction 3 %d \n", 7/2);
     printf("7.0/2: my prediction 3 %.6f \n", 7.0/2);
