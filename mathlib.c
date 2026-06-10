@@ -1,4 +1,5 @@
 #include "mathlib.h"
+#include <math.h>
 
 int clamp(int value, int lo, int hi) {
     if( value < hi && value > lo){
@@ -20,12 +21,35 @@ double power(double base, int exp) {
 }
 
 int is_prime(int n) {
-    
+    if(n < 2){
+        return 0;
+    }
+    double root = sqrt(n);
+    for(int i = 2; i <= root; i++){
+        if((int)root%i != 0){
+            continue;
+        }else{
+            return 1;
+        }
+    }
     return 0;
 }
 
 int gcd(int a, int b) {
-    /* TODO */
+    if(a > b){
+        if(a%b == 0){
+            return b;
+        }
+        int remainder = a%b;
+        int quotient = (a - remainder)/b;
+        while(remainder != 0){
+            if(remainder == 0){
+            return quotient;
+            }
+        }
+        
+
+    }
     return 0;
 }
 
