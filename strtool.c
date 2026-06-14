@@ -21,17 +21,25 @@ int main(void){
         }
     }while (selection > 9 || selection < 1);
     char str[65];
+    int intstr[65];
+    char dst[64];
+    int count;
+    char target5;
+    int target8;
+    int min;
+    int max;
+    double average;
+
     switch (selection){
         case 1:
             printf("Enter string: \n");
             fscanf(stdin, "%s", str);
-            printf("Length: %d \n", str_length(*str));
+            printf("Length: %d \n", str_length(str));
             break;
         case 2:
-            char dst[64];
             printf("Enter string: \n");
             fscanf(stdin, "%s", str);
-            str_copy(*dst, *str, 64);
+            str_copy(dst, str, 64);
             printf("String 1: %s \nString 2: %s \n", str, dst);
             break;
         case 3:
@@ -49,12 +57,11 @@ int main(void){
             printf("Reversed: %s \n", str);
             break;
         case 5:
-        char target = 'a';
             printf("Enter string: \n");
             fscanf(stdin, "%s", str);
             printf("Enter char: \n");
-            fscanf(stdin, "%c", target);
-            printf("%s has %c in it %d time(s).\n", str, target, str_count_char(str, target));
+            fscanf(stdin, " %c", &target5);
+            printf("%s has %c in it %d time(s).\n", str, target5, str_count_char(str, target5));
             break;
         case 6:
             printf("Enter string: \n");
@@ -63,33 +70,31 @@ int main(void){
             printf("%s \n", str);
             break;
         case 7:
-            int count;
-            int min;
-            int max;
-            int average;
             printf("Enter count then values: \n");
             fscanf(stdin, "%d", &count);
             for(int i = 0; i<count; i++){
-                fscanf(stdin, "%d", &str[i]);
+                fscanf(stdin, "%d", &intstr[i]);
             }
-            array_stats(str, count, min, max, average);
+            array_stats(intstr, count, &min, &max, &average);
             printf("min=%d  max=%d  avg=%.2lf \n", min, max, average);
-
+            break;
         case 8:
-            int count;
-            int target;
             printf("Enter count then values: \n");
             fscanf(stdin, "%d", &count);
             for(int i = 0; i<count; i++){
-                fscanf(stdin, "%d", &str[i]);
+                fscanf(stdin, "%d", &intstr[i]);
             }
             printf("Enter target: \n");
-            fscanf(stdin, "%d", &target);
-
-            printf("Found at index %d", array_find(str, count, target));
+            fscanf(stdin, "%d", &target8);
+            if(array_find(intstr, count, target8) != 0){
+                printf("Found at index %d\n", array_find(intstr, count, target8));
+            }else{
+                printf("Index not found.\n");
+            }
+            break;
         case 9:
             return 0;
-
+            break;
 
     }
 

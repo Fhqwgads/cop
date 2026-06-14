@@ -38,17 +38,18 @@ int str_compare(const char *a, const char *b) {
 }
 
 void str_reverse(char *s) {
-    int count;
+    int count = 0;
     for(int i = 0; s[i] != '\0'; i++){
         count += 1;
     }
     char temp[16];
-    for(int i = 0; s[i] != '\0' || i == count - 1 ; i++){
+    for(int i = 0; s[i] != '\0'; i++){
         temp[i] = s[i];
     }
     for(int i = 0; s[i] != '\0'; i++){
-        
-        s[i] = temp[count - i];
+        if(temp[count - 1 - i] != '\0'){
+            s[i] = temp[count - 1 - i];
+        }
     }
 
     /* TODO: swap characters from both ends toward the middle */
@@ -69,7 +70,7 @@ int str_count_char(const char *s, char c) {
 void str_to_upper(char *s) {
 
     for(int i = 0; s[i] != '\0'; i++){
-        if('a' <= s[i] <= 'z'){
+        if('a' <= s[i] && s[i] <= 'z'){
             s[i] -= 32;
         }
         
