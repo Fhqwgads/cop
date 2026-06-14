@@ -3,6 +3,15 @@
 
 int main(void){
     int selection;
+    char str[65];
+    int intstr[65];
+    char dst[64];
+    int count;
+    char target5;
+    int target8;
+    int min;
+    int max;
+    double average;
     do{
         printf("= String & Array Toolkit =\n");
         printf("1. String length\n");
@@ -19,18 +28,7 @@ int main(void){
         if(selection > 9 || selection < 1){
             printf("Invalid choice. Try again.\n");
         }
-    }while (selection > 9 || selection < 1);
-    char str[65];
-    int intstr[65];
-    char dst[64];
-    int count;
-    char target5;
-    int target8;
-    int min;
-    int max;
-    double average;
-
-    switch (selection){
+        switch (selection){
         case 1:
             printf("Enter string: \n");
             fscanf(stdin, "%s", str);
@@ -98,5 +96,9 @@ int main(void){
 
     }
 
+    }while (selection > 9 || selection < 1 || selection != 9);
+    
+
+    
 
 }
