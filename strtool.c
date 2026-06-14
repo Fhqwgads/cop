@@ -16,65 +16,60 @@ int main(void){
         printf("9. Quit\n");
         printf("Enter choice (1-9): \n");
         fscanf(stdin, "%d", &selection);
-        if(selection > 7 || selection < 1){
+        if(selection > 9 || selection < 1){
             printf("Invalid choice. Try again.\n");
         }
-    }while (selection > 7 || selection < 1);
-    
+    }while (selection > 9 || selection < 1);
+    char str[65];
     switch (selection){
         case 1:
-            int val;
-            int lo;
-            int hi;
-            printf("Enter value, lo, hi: ");
-            fscanf(stdin, "%d", &val);
-            fscanf(stdin, "%d", &lo);
-            fscanf(stdin, "%d", &hi);
-            printf("\nclamp(%d, %d, %d) = %d", val, lo, hi, clamp(val, lo, hi));
+            printf("Enter string: ");
+            fscanf(stdin, "%s", str);
+            printf("\nLength: %d", str_length(*str));
             break;
         case 2:
-            double base;
-            int exponent;
-            printf("Enter base and exponent: ");
-            fscanf(stdin, "%lf", &base);
-            fscanf(stdin, "%d", &exponent);
-            printf("power(%lf, %d) = %.2lf", base, exponent, power(base, exponent));
+            char dst[64];
+            printf("Enter string: ");
+            fscanf(stdin, "%s", str);
+            str_copy(*dst, *str, 64);
+            printf("String 1: %s \nString 2: %s", str, dst);
             break;
         case 3:
-            int checkPrime;
-            printf("Enter n: ");
-            fscanf(stdin, "%d", &checkPrime);
-            if (is_prime(checkPrime)){
-                printf("%d is prime.", checkPrime);
-            }else{
-                printf("%d is not prime.", checkPrime);
-            }
+            char str2[64];
+            printf("Enter string: ");
+            fscanf(stdin, "%s", str);
+            printf("Enter string 2: ");
+            fscanf(stdin, "%s", str2);
+            printf("(%s, %s) -> %d", str, str2, str_compare(str, str2));
             break;
         case 4:
-            int a;
-            int b;
-            printf("Enter a and b: ");
-            fscanf(stdin, "%d", &a);
-            fscanf(stdin, "%d", &b);
-            printf("gcd(%d, %d) = %d", a, b, gcd(a, b));
+            printf("Enter string: ");
+            fscanf(stdin, "%s", str);
+            str_reverse(str);
+            printf("Reversed: %s", str);
             break;
         case 5:
-            int count;
-            int values[10];
-            printf("Enter count then values: ");
-            fscanf(stdin, "%d", &count);
-            for(int i = 0; i<count; i++){
-                fscanf(stdin, "%d", &values[i]);
-            }
-            printf("average = %.2lf ", average(values, count));
+        char target = 'a';
+            printf("Enter string: \n");
+            fscanf(stdin, "%s", str);
+            printf("Enter char: \n");
+            fscanf(stdin, "%c", target);
+            printf("%s has %c in it %d time(s).\n", str, target, str_count_char(str, target));
             break;
         case 6:
-            long long digitNumber;
-            printf("Enter integer: ");
-            fscanf(stdin, "%lld", &digitNumber);
-            printf("%lld has %d digits.", digitNumber, count_digits(digitNumber));
+            printf("Enter string: \n");
+            fscanf(stdin, "%s", str);
+            str_to_upper(str);
+            printf("%s ", str);
             break;
         case 7:
+            printf("Enter count then values: ");
+            fscanf(stdin, "%s", str);
+
+        case 8:
+            printf("Enter string: ");
+            fscanf(stdin, "%s", str);
+        case 9:
             return 0;
 
 
