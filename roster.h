@@ -4,7 +4,7 @@
 #define MAX_STUDENTS 50
 
 typedef enum {
-    GRADE_A, GRADE_B, GRADE_C, GRADE_D, GRADE_F, GRADE_INCOMPLETE
+    GRADE_A, GRADE_B, GRADE_C, GRADE_D, GRADE_F, GRADE_INVALID
 } Grade;
 
 typedef struct {
