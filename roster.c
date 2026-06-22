@@ -51,7 +51,7 @@ int      roster_remove(Roster *r, int student_id){
             }
         }
     }
-    r->count--;
+    if (flag == 1) r->count--;
     return flag;
 }
 Student *roster_find_by_id(Roster *r, int student_id){
