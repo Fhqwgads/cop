@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include "roster.h"
 
@@ -18,39 +19,40 @@ Student  create_student(const char *first, const char *last,
     }else if(gpa < 1.0){
         standing = GRADE_F;
     }
-    Student s = {*first, *last, id, gpa, standing};
+    
+    Student s;
+    strcpy(s.first_name, first);
+    strcpy(s.last_name, last);
+    s.student_id = id;
+    s.gpa = gpa;
+    s.standing = standing;
     return s;
 }
 int      roster_add(Roster *r, Student s){
-    int checked;
     if(r->count >= MAX_STUDENTS){
         return 0;
     }
     for(int i = 0; i < r->count; i++){
-        if(r->students[i].student_id != s.student_id){
-            checked = 1;
-        }else{
+        if(r->students[i].student_id == s.student_id){
             return -1;
         }
     }
-    if(checked){
-        r->students[r->count] = s;
-        r->count++;
-        return 1;
-    }
-    
+    r->students[r->count] = s;
+    r->count++;
+    return 1;
 }
 int      roster_remove(Roster *r, int student_id){
+    int flag = 0;
     for(int i = 0; i < r->count; i++){
         if(r->students[i].student_id == student_id){
+            flag = 1;
             for(i = i; i < r->count - 1; i++){
                 r->students[i] = r->students[i+1];
             }
-            r->count--;
-            return 1;
-        }else{return 0;}
+        }
     }
-    
+    r->count--;
+    return flag;
 }
 Student *roster_find_by_id(Roster *r, int student_id){
 for(int i = 0; i < r->count; i++){
@@ -65,7 +67,9 @@ return NULL;
 
 Student *roster_find_by_name(Roster *r, const char *last_name){
 for(int i = 0; i < r->count; i++){
-    if(strcmp(r->students[i].last_name, last_name) ){
+     if(strcmp(r->students[i].last_name, last_name)){
+        continue;
+    }else{
         return &r->students[i];
     }
 }
@@ -79,6 +83,10 @@ void     roster_sort_by_name(Roster *r){
                 temp = r->students[j];
                 r->students[j] = r->students[j+1];
                 r->students[j+1] = temp;
+            }else if(strcmp(r->students[j].first_name, r->students[j+1].first_name) > 0){
+                  temp = r->students[j];
+                r->students[j] = r->students[j+1];
+                r->students[j+1] = temp;
             }
         }
     }
@@ -89,7 +97,7 @@ void     roster_sort_by_gpa(Roster *r){
 Student temp;
     for(int i = 0; i < r->count - 1; i++){
         for(int j = 0; j < r->count - 1 - i; j++){
-            if (r->students[j].gpa > r->students[j+1].gpa){
+            if (r->students[j].gpa < r->students[j+1].gpa){
                 temp = r->students[j];
                 r->students[j] = r->students[j+1];
                 r->students[j+1] = temp;
@@ -101,7 +109,7 @@ void     print_student(const Student *s){
     if(s == NULL){
         printf("No Student to Print.\n");
     }else{
-    printf("[%d] %s, %s          GPA: %.2lf  Standing: %c\n", s->student_id, s->last_name, s->first_name, s->gpa, s->standing);
+    printf("[%d] %s, %s          GPA: %.2lf  Standing: %s\n", s->student_id, s->last_name, s->first_name, s->gpa, grade_to_string(s->standing));
     }
 }
 void     print_roster(const Roster *r){
@@ -137,6 +145,7 @@ const char *grade_to_string(Grade g){
             return "Incomplete";
             break;
     }
+    return "NULL";
 }
 double   roster_average_gpa(const Roster *r){
     double sum = 0.0;

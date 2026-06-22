@@ -30,39 +30,40 @@ int main(void){
             switch (selection){
         case 1:
             printf("First name: ");
-            fscanf(stdin, "%s ", firstName);
+            fscanf(stdin, "%s", firstName);
             printf("Last name:  ");
-            fscanf(stdin, "%s ", lastName);
+            fscanf(stdin, "%s", lastName);
             printf("Student ID: ");
-            fscanf(stdin, "%d", id);
+            fscanf(stdin, "%d", &id);
             printf("GPA:        ");
-            fscanf(stdin, "%lf", gpa);
-            if(roster_add(&r,create_student(firstName, lastName, id, gpa))==0){
-                printf("\nRoster Full, Student Not Added.");
-            }else if(roster_add(&r,create_student(firstName, lastName, id, gpa))==-1){
-                printf("\nID Already Exists, Student Not Added.");
+            fscanf(stdin, "%lf", &gpa);
+            int added = roster_add(&r,create_student(firstName, lastName, id, gpa));
+            if(added == 0){
+                printf("\nRoster Full, Student Not Added.\n");
+            }else if(added == -1){
+                printf("\nID Already Exists, Student Not Added.\n");
             }
             break;
         case 2:
             printf("Enter student ID: ");
-            fscanf(stdin, "%s", id);
+            fscanf(stdin, "%d", &id);
             if(roster_remove(&r, id)){
-                printf("\nStudent removed.");
+                printf("\nStudent removed.\n");
             }else{
-                printf("\nStudent not found.");
+                printf("\nStudent not found.\n");
             }
             break;
         case 3:
             printf("Enter student ID: ");
-            fscanf(stdin, "%d", id);
-            Student *temp = roster_find_by_id(&r, id);
-            print_student(&temp);
+            fscanf(stdin, "%d", &id);
+            Student *tempID = roster_find_by_id(&r, id);
+            print_student(tempID);
             break;
         case 4:
             printf("Enter student last name: ");
             fscanf(stdin, "%s", lastName);
-            Student *temp = roster_find_by_Name(&r, lastName);
-            print_student(&temp);
+            Student *tempName = roster_find_by_name(&r, lastName);
+            print_student(tempName);
             break;
         case 5:
             roster_sort_by_name(&r);
