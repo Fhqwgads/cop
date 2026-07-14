@@ -20,9 +20,19 @@ void playlist_init(Playlist *pl){
     pl->head = NULL; 
     pl->tail = NULL;
 }
-//void playlist_free(Playlist *pl){
-
-//}
+void playlist_free(Playlist *pl){
+    int count = 0;
+    Song *temp;
+    Song *del = pl->head;
+    while(count < pl->count){
+        temp = del->next;
+        free(del);
+        del = temp;
+    }
+    free(pl->head);
+    free(pl->tail);
+    free(pl);
+}
 
 int playlist_append(
     Playlist   *pl,
@@ -46,20 +56,39 @@ int playlist_append(
                 pl->count++;
                 return 0;
             }
-        pl->tail->next = newSong;
+        newSong->prev = pl->tail;
         pl->tail = newSong;
         pl->count++;
         return 0;
 
 }
 
-/*int playlist_prepend(
+int playlist_prepend(
     Playlist   *pl,
     const char *title,
     const char *artist,
     int         duration_sec
 ){
-
+    Song *newSong = malloc(sizeof(Song));
+        if (newSong == NULL){
+            perror("malloc");
+            return 1;
+        }
+        strcpy(newSong->title, title);
+        strcpy(newSong->artist, artist);
+        newSong->duration_sec = duration_sec;
+        newSong->prev = NULL;
+        newSong->next = pl->head;
+            if(pl->count == 0){
+                pl->tail = newSong;
+                pl->head = newSong;
+                pl->count++;
+                return 0;
+            }
+        newSong->next = pl->head;
+        pl->head = newSong;
+        pl->count++;
+        return 0;
 }
 
 int playlist_insert_after(
@@ -82,7 +111,7 @@ int playlist_move_up(
     const char *title
 ){
 
-}*/
+}
 
 void playlist_print(
     const Playlist *pl
