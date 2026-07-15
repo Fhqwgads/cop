@@ -4,10 +4,13 @@
 #include "playlist.h"
 
 int main(){
+    
     Playlist *pl = malloc(sizeof(Playlist));
     playlist_init(pl);
     playlist_load(pl, "test.txt");
     playlist_print(pl);
+    
+
 
 }
 
@@ -47,6 +50,8 @@ int playlist_append(
         }
         strcpy(newSong->title, title);
         strcpy(newSong->artist, artist);
+        newSong->artist[63] = '\0';
+        newSong->artist[63] = '\0';
         newSong->duration_sec = duration_sec;
         newSong->prev = pl->tail;
         newSong->next = NULL;
@@ -76,6 +81,8 @@ int playlist_prepend(
         }
         strcpy(newSong->title, title);
         strcpy(newSong->artist, artist);
+        newSong->artist[63] = '\0';
+        newSong->artist[63] = '\0';
         newSong->duration_sec = duration_sec;
         newSong->prev = NULL;
         newSong->next = pl->head;
@@ -98,19 +105,98 @@ int playlist_insert_after(
     const char *artist,
     int         duration_sec
 ){
-
+    int count = 0;
+    Song *temp = pl->head;
+    Song *newSong = malloc(sizeof(Song));
+    if(newSong == NULL){
+        perror("malloc");
+        return 1;
+    }
+    strcpy(newSong->title, title);
+    strcpy(newSong->artist, artist);
+    newSong->title[63] = '\0';
+    newSong->artist[63] = '\0';
+    newSong->duration_sec = duration_sec;
+    while(temp != NULL && count < pl->count){
+        if(!strcmp(temp->title, after_title)){
+            if(temp->next != NULL){
+                newSong->next = temp->next;
+                newSong->next->prev = newSong;
+            }
+            temp->next = newSong;
+            newSong->prev = temp;
+            return 0;
+        }
+        temp = temp->next;
+        count++;
+    }
+    printf("Title not found.\n");
+    free(newSong);
+    return 1;
 }
+
 int playlist_remove(
     Playlist   *pl,
     const char *title
 ){
+    int count = 0;
+    Song* temp = pl->head;
+    while(temp != NULL && count < pl->count){
+        if(!strcmp(temp->title, title)){
+            if(temp->next == NULL){
+                pl->tail = temp->prev;
+            }else{
+                temp->next->prev = temp->prev;
+            }
+            if(temp->prev == NULL){
+                pl->head = temp->next;
+            }else{
+                temp->prev->next = temp->next;
+            }
+            free(temp);
+            pl->count--;
+            return 0;
+        }
+        temp = temp->next;
+        count++;
+    }
+    printf("title not found");
+    return -1;
 
 }
 int playlist_move_up(
     Playlist   *pl,
     const char *title
 ){
-
+    int count = 0;
+    Song *temp = pl->head;
+    Song *swap;
+    while(temp != NULL && count < pl->count){
+        if(!strcmp(temp->title, title)){
+            if(temp->prev == NULL){
+                printf("Song is already at the top of the list.\n");
+                return 1;
+            }else{
+                char tempTitle[64];
+                char tempArtist[64];
+                int tempDur = 0;
+                strcpy(tempTitle, temp->title);
+                strcpy(tempArtist, temp->artist);
+                tempDur = temp->duration_sec; 
+                strcpy(temp->title, temp->prev->title);
+                strcpy(temp->artist, temp->prev->artist);
+                temp->duration_sec = temp->prev->duration_sec;
+                strcpy(temp->prev->title, tempTitle);
+                strcpy(temp->prev->artist, tempArtist);
+                temp->prev->duration_sec = tempDur;
+                return 1;
+            }
+        }
+        temp = temp->next;
+        count++;
+    }
+    return 0;
+    
 }
 
 void playlist_print(
@@ -148,9 +234,9 @@ void playlist_print_reverse(
         durMinutes = temp->duration_sec / 60;
         durSeconds = temp->duration_sec % 60;
         if (durSeconds < 10){
-            printf("%d. %s - %s [%d:0%d]\n", count + 1, temp->title, temp->artist, durMinutes, durSeconds);}
+            printf("%d. %s - %s [%d:0%d]\n", pl->count - count, temp->title, temp->artist, durMinutes, durSeconds);}
         else{
-            printf("%d. %s - %s [%d:%d]\n", count + 1, temp->title, temp->artist, durMinutes, durSeconds);}
+            printf("%d. %s - %s [%d:%d]\n", pl->count - count, temp->title, temp->artist, durMinutes, durSeconds);}
         temp = temp->prev;
         count++;
     }   
