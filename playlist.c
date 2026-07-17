@@ -4,14 +4,112 @@
 #include "playlist.h"
 
 int main(){
-    
+    char selection[4];
+
     Playlist *pl = malloc(sizeof(Playlist));
     playlist_init(pl);
     playlist_load(pl, "test.txt");
-    playlist_print(pl);
-    
 
+    do{
+        fscanf(stdin, "%s", selection);
+        if((strcmp(selection, "p") && strcmp(selection, "r") && strcmp(selection, "t") && strcmp(selection, "a") &&
+            strcmp(selection, "pre") && strcmp(selection, "ins") && strcmp(selection, "del") && 
+            strcmp(selection, "up") && strcmp(selection, "q"))){
 
+                printf("Invalid choice. Try again.\n");
+                continue;
+        }
+        if(!strcmp(selection, "p")){
+            playlist_print(pl);
+            continue;
+        }
+        if(!strcmp(selection, "r")){
+            playlist_print_reverse(pl);
+            continue;
+        }
+        if(!strcmp(selection, "t")){
+            int total = playlist_total_duration(pl);
+            int seconds = total % 60;
+            int minutes = total / 60;
+            int hours = minutes / 60;
+            printf("Total: ");
+        if (hours < 10){
+            printf("0%d:", hours);
+        }else{printf("%d:", hours);}
+        if (minutes < 10){
+            printf("0%d:", minutes);
+        }else{printf("%d:", minutes);}
+        if (seconds < 10){
+            printf("0%d\n", seconds);
+        }else{printf("%d\n", seconds);}
+        continue;    
+        }
+
+        if(!strcmp(selection, "a")){
+            char input[256];
+            fscanf(stdin, "%s", input);
+            char appTitle[64];
+            char appArtist[64];
+            int appSecond = 0;
+            if(sscanf(input, "%63[^|]|%63[^|]|%d", appTitle, appArtist, &appSecond) == 3){
+                playlist_append(pl, appTitle, appArtist, appSecond);
+                printf("Song added.\n");
+            }else{
+                printf("input error.\n");
+            }
+            continue;
+        }
+        if(!strcmp(selection, "pre")){
+            char input[256];
+            fscanf(stdin, "%s", input);
+            char preTitle[64];
+            char preArtist[64];
+            int preSecond = 0;
+            if(sscanf(input, "%63[^|]|%63[^|]|%d", preTitle, preArtist, &preSecond) == 3){
+                playlist_prepend(pl, preTitle, preArtist, preSecond);
+                printf("Song added.\n");
+            }else{
+                printf("input error.\n");
+            }
+            continue;
+        }
+        if(!strcmp(selection, "ins")){
+            char input[256];
+            fscanf(stdin, "%s", input);
+            char insTitle[64];
+            char newTitle[64];
+            char newArtist[64];
+            int newSecond = 0;
+            if(sscanf(input, "%63[^|]|%63[^|]|%63[^|]|%d", insTitle, newTitle, newArtist, &newSecond) == 4){
+                playlist_insert_after(pl, insTitle, newTitle, newArtist, newSecond);
+                printf("Song added.\n");
+            }else{
+                printf("input error.\n");
+            }
+            continue;
+        } 
+        if(!strcmp(selection, "del")){
+            char delTitle[64];
+            fscanf(stdin, "%s", delTitle);
+            if(!playlist_remove(pl, delTitle)){
+                printf("song removed.\n");
+            }
+            continue;
+        }
+        if(!strcmp(selection, "up")){
+            char upTitle[64];
+            fscanf(stdin, "%s", upTitle);
+            if(playlist_move_up(pl, upTitle)){
+                printf("song moved.\n");
+            }
+            continue;
+        } 
+        if(!strcmp(selection, "q")){
+            playlist_save(pl, "test.txt");
+            return 0;
+        } 
+
+    }while (strcmp(selection, "q"));
 }
 
 void playlist_init(Playlist *pl){
@@ -53,17 +151,19 @@ int playlist_append(
         newSong->artist[63] = '\0';
         newSong->artist[63] = '\0';
         newSong->duration_sec = duration_sec;
-        newSong->prev = pl->tail;
         newSong->next = NULL;
             if(pl->count == 0){
+                newSong->prev = NULL;
                 pl->tail = newSong;
                 pl->head = newSong;
                 pl->count++;
                 return 0;
+            }else{
+                pl->tail->next = newSong;
+                newSong->prev = pl->tail;
+                pl->tail = newSong;
+                pl->count++;
             }
-        newSong->prev = pl->tail;
-        pl->tail = newSong;
-        pl->count++;
         return 0;
 
 }
@@ -91,9 +191,11 @@ int playlist_prepend(
                 pl->head = newSong;
                 pl->count++;
                 return 0;
+            }else{
+                newSong->next = pl->head;
+                pl->head->prev = newSong;
+                pl->head = newSong;
             }
-        newSong->next = pl->head;
-        pl->head = newSong;
         pl->count++;
         return 0;
 }
@@ -170,12 +272,11 @@ int playlist_move_up(
 ){
     int count = 0;
     Song *temp = pl->head;
-    Song *swap;
     while(temp != NULL && count < pl->count){
         if(!strcmp(temp->title, title)){
             if(temp->prev == NULL){
                 printf("Song is already at the top of the list.\n");
-                return 1;
+                return 0;
             }else{
                 char tempTitle[64];
                 char tempArtist[64];
@@ -230,13 +331,13 @@ void playlist_print_reverse(
     int durSeconds = 0;
 
     printf("= Playlist (%d songs) =\n", pl->count);
-    while (count < pl->count){
+    while (temp != NULL && count < pl->count){
         durMinutes = temp->duration_sec / 60;
         durSeconds = temp->duration_sec % 60;
         if (durSeconds < 10){
-            printf("%d. %s - %s [%d:0%d]\n", pl->count - count, temp->title, temp->artist, durMinutes, durSeconds);}
+            printf("%d. %s - %s [%d:0%d]\n", (pl->count - count), temp->title, temp->artist, durMinutes, durSeconds);}
         else{
-            printf("%d. %s - %s [%d:%d]\n", pl->count - count, temp->title, temp->artist, durMinutes, durSeconds);}
+            printf("%d. %s - %s [%d:%d]\n", (pl->count - count), temp->title, temp->artist, durMinutes, durSeconds);}
         temp = temp->prev;
         count++;
     }   
@@ -251,6 +352,7 @@ int playlist_total_duration(
     int count = 0;
     while(count < pl->count){
         totalDur += temp->duration_sec;
+        temp = temp->next;
         count++;
     }
     return totalDur;

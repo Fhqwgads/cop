@@ -1,4 +1,7 @@
+goo|goo|230
 Bohemian Rhapsody|Queen|354
 Hotel California|Eagles|391
 Stairway to Heaven|Led Zeppelin|482
 Come Together|Beatles|259
+za|za|3213
+gag|gag|34829523
