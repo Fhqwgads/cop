@@ -74,8 +74,11 @@ int main(){
             continue;
         }
         if(!strcmp(selection, "ins")){
+            getchar();
             char input[256];
-            fscanf(stdin, "%s", input);
+            if (fgets(input, sizeof(input), stdin) != NULL) {
+                input[strcspn(input, "\n")] = '\0';
+            }
             char insTitle[64];
             char newTitle[64];
             char newArtist[64];
@@ -221,13 +224,21 @@ int playlist_insert_after(
     newSong->duration_sec = duration_sec;
     while(temp != NULL && count < pl->count){
         if(!strcmp(temp->title, after_title)){
-            if(temp->next != NULL){
+            if(temp == pl->tail){
+                newSong->next = NULL;
+                newSong->prev = temp;
+                temp->next = newSong;
+                pl->tail = newSong;
+                pl->count++;
+                return 0;
+            }else{
                 newSong->next = temp->next;
-                newSong->next->prev = newSong;
+                temp->next->prev = newSong;
+                newSong->prev = temp;
+                temp->next = newSong;
+                pl->count++;
+                return 0;
             }
-            temp->next = newSong;
-            newSong->prev = temp;
-            return 0;
         }
         temp = temp->next;
         count++;
