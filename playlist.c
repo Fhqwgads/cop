@@ -92,17 +92,23 @@ int main(){
             continue;
         } 
         if(!strcmp(selection, "del")){
-            char delTitle[64];
-            fscanf(stdin, "%s", delTitle);
-            if(!playlist_remove(pl, delTitle)){
+            getchar();
+            char input[256];
+            if (fgets(input, sizeof(input), stdin) != NULL) {
+                input[strcspn(input, "\n")] = '\0';
+            }
+            if(!playlist_remove(pl, input)){
                 printf("song removed.\n");
             }
             continue;
         }
         if(!strcmp(selection, "up")){
-            char upTitle[64];
-            fscanf(stdin, "%s", upTitle);
-            if(playlist_move_up(pl, upTitle)){
+            getchar();
+            char input[256];
+            if (fgets(input, sizeof(input), stdin) != NULL) {
+                input[strcspn(input, "\n")] = '\0';
+            }
+            if(playlist_move_up(pl, input)){
                 printf("song moved.\n");
             }
             continue;
@@ -292,14 +298,20 @@ int playlist_move_up(
                 char tempTitle[64];
                 char tempArtist[64];
                 int tempDur = 0;
-                strcpy(tempTitle, temp->title);
-                strcpy(tempArtist, temp->artist);
+                strncpy(tempTitle, temp->title, 63);
+                temp->title[63] = '\0';
+                strncpy(tempArtist, temp->artist, 63);
+                temp->artist[63] = '\0';
                 tempDur = temp->duration_sec; 
-                strcpy(temp->title, temp->prev->title);
-                strcpy(temp->artist, temp->prev->artist);
+                strncpy(temp->title, temp->prev->title, 63);
+                temp->prev->title[63] = '\0';
+                strncpy(temp->artist, temp->prev->artist, 63);
+                temp->prev->artist[63] = '\0';
                 temp->duration_sec = temp->prev->duration_sec;
-                strcpy(temp->prev->title, tempTitle);
-                strcpy(temp->prev->artist, tempArtist);
+                strncpy(temp->prev->title, tempTitle, 63);
+                tempTitle[63] = '\0';
+                strncpy(temp->prev->artist, tempArtist, 63);
+                tempArtist[63] = '\0';
                 temp->prev->duration_sec = tempDur;
                 return 1;
             }

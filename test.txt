@@ -1,4 +1,5 @@
-Bohemian Rhapsody|Queen|354
-Hotel California|Eagles|391
 Stairway to Heaven|Led Zeppelin|482
+Bohemian Rhapsody|Queen|354
+goo|goo|232
+Hotel California|Eagles|391
 Come Together|Beatles|259
