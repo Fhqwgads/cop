@@ -433,7 +433,6 @@ FILE *fp;
         temp = temp->next;
         count++;
     }
-
     fclose(fp);
     return 0;
 }
