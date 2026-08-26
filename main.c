@@ -11,14 +11,17 @@ int main(void)
 
     scanf("%d", &count);
     readAllMonsters(monsters, &count);
-    
+
     
 }
 
 
 void readAllMonsters(Monster monsters[], int *count)
 {
-
+    for(int i = 0; i < count; i++)
+    {
+        fscan(%)
+    }
 }
 
 void printAllMonster(Monster *monsters, int count)
