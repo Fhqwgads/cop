@@ -2,6 +2,7 @@
 #define MAIN_C
 
 #define MAXSTRLEN 20 
+#define MAX_MONSTERS 100 
 
 typedef struct { 
     char name[MAXSTRLEN+1]; 
@@ -11,5 +12,10 @@ typedef struct {
     int attack; 
     int defense; 
 } Monster; 
+void readAllMonsters(Monster monsters[], int *count);
+void printAllMonster(Monster *monsters, int count); 
+void trainMonster(Monster *monster);
+int getStrongestMonster(Monster monsters[], int count);
+
 
 #endif
