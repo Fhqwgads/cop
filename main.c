@@ -11,6 +11,7 @@ int main(void)
 
     scanf("%d", &count);
     readAllMonsters(monsters, &count);
+    printAllMonsters(monsters, count);
 
     
 }
@@ -18,15 +19,22 @@ int main(void)
 
 void readAllMonsters(Monster monsters[], int *count)
 {
-    for(int i = 0; i < count; i++)
+    int newCount = 0;
+    for(int i = 0; i < *count; i++)
     {
-        fscan(%)
+        
+        fscanf(stdin, "%s %s %d %d %d %d", monsters[i].name, monsters[i].type, &monsters[i].level, &monsters[i].hp, &monsters[i].attack, &monsters[i].defense);
+        newCount += 1;
     }
+    *count = newCount;
 }
 
 void printAllMonster(Monster *monsters, int count)
 {
-
+    for(int i = 0; i < count; i++)
+    {
+        
+    }
 }
 
 void trainMonster(Monster *monster)
