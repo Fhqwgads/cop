@@ -10,8 +10,8 @@ int main(void)
     int count = 0;
 
     scanf("%d", &count);
-    readAllMonsters(monsters, &count);
-    printAllMonsters(monsters, count);
+    readAllMonsters(*monsters, &count);
+    printAllMonster(*monsters, count);
 
     
 }
@@ -31,9 +31,10 @@ void readAllMonsters(Monster monsters[], int *count)
 
 void printAllMonster(Monster *monsters, int count)
 {
+    printf("=== MONSTER TEAM ===\n"); 
     for(int i = 0; i < count; i++)
     {
-        
+        printf("Monster: %d\nName: %s\nType: %s\nLevel: %d\nHP: %d\nAttack: %d\nDefense: %d\n\n", count, monsters[i].name, monsters[i].type, monsters[i].level, monsters[i].hp, monsters[i].attack, monsters[i].defense);
     }
 }
 

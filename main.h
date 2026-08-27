@@ -12,6 +12,7 @@ typedef struct {
     int attack; 
     int defense; 
 } Monster; 
+
 void readAllMonsters(Monster monsters[], int *count);
 void printAllMonster(Monster *monsters, int count); 
 void trainMonster(Monster *monster);
