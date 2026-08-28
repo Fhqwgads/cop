@@ -17,10 +17,10 @@ int main(void)
     fscanf(stdin, "%d", &index);
     trainMonster(&monsters[index]);
     printf("=== TRAINING ===\n");
-    printf("Monster: %d\nName: %s\nType: %s\nLevel: %d\nHP: %d\nAttack: %d\nDefense: %d\n\n", index, monsters[index].name, monsters[index].type, monsters[index].level, monsters[index].hp, monsters[index].attack, monsters[index].defense);
+    printf("Monster %d:\nName: %s\nType: %s\nLevel: %d\nHP: %d\nAttack: %d\nDefense: %d\n\n", index, monsters[index].name, monsters[index].type, monsters[index].level, monsters[index].hp, monsters[index].attack, monsters[index].defense);
     int strongestIndex = findStrongest(monsters, count);
     printf("=== STRONGEST MONSTER ===\n");
-    printf("Monster: %d\nName: %s\nType: %s\nLevel: %d\nHP: %d\nAttack: %d\nDefense: %d\n\n", strongestIndex, monsters[strongestIndex].name, monsters[strongestIndex].type, monsters[strongestIndex].level, monsters[strongestIndex].hp, monsters[strongestIndex].attack, monsters[strongestIndex].defense);
+    printf("Monster %d:\nName: %s\nType: %s\nLevel: %d\nHP: %d\nAttack: %d\nDefense: %d\n\n", strongestIndex, monsters[strongestIndex].name, monsters[strongestIndex].type, monsters[strongestIndex].level, monsters[strongestIndex].hp, monsters[strongestIndex].attack, monsters[strongestIndex].defense);
 }
 
 
@@ -46,7 +46,7 @@ void printAllMonster(Monster *monsters, int count)
     printf("=== MONSTER TEAM ===\n"); 
     for(int i = 0; i < count; i++)
     {
-        printf("Monster: %d\nName: %s\nType: %s\nLevel: %d\nHP: %d\nAttack: %d\nDefense: %d\n\n", 
+        printf("Monster %d:\nName: %s\nType: %s\nLevel: %d\nHP: %d\nAttack: %d\nDefense: %d\n\n", 
             i, monsters[i].name, monsters[i].type, monsters[i].level, 
             monsters[i].hp, monsters[i].attack, monsters[i].defense);
     }
