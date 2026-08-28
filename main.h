@@ -16,7 +16,7 @@ typedef struct {
 void readAllMonsters(Monster monsters[], int *count);
 void printAllMonster(Monster *monsters, int count); 
 void trainMonster(Monster *monster);
-int getStrongestMonster(Monster monsters[], int count);
+int findStrongest(Monster monsters[], int count);
 
 
 #endif

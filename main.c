@@ -43,7 +43,7 @@ void trainMonster(Monster *monster)
 
 }
 
-int getStrongestMonster(Monster monsters[], int count)
+int findStrongest(Monster monsters[], int count)
 {
 
 }
