@@ -6,20 +6,20 @@ This program is written by: Nicholas Anthony Hernandez */
 
 int main(void)
 {
-    Monster monsters[MAX_MONSTERS];
-    int count = 0;
+    Monster monsters[MAX_MONSTERS]; //initializing monster array
+    int count = 0;                  //initializing a few variables for input
     int *countptr = &count;
     int index = 0;
 
-    scanf("%d", &count);
-    readAllMonsters(monsters, countptr);
-    printAllMonster(monsters, count);
-    fscanf(stdin, "%d", &index);
-    trainMonster(&monsters[index]);
+    scanf("%d", &count);                    //scans for input to populate the array x number of times
+    readAllMonsters(monsters, countptr);    //function popluates the array
+    printAllMonster(monsters, count);       //prints the contents of the array
+    fscanf(stdin, "%d", &index);            //scans for index number of a monster within the array
+    trainMonster(&monsters[index]);         //function trains the indicated monster
     printf("=== TRAINING ===\n");
     printf("Training Monster %d...\n", index);
     printf("Name: %s\nType: %s\nLevel: %d\nHP: %d\nAttack: %d\nDefense: %d\n\n", monsters[index].name, monsters[index].type, monsters[index].level, monsters[index].hp, monsters[index].attack, monsters[index].defense);
-    int strongestIndex = findStrongest(monsters, count);
+    int strongestIndex = findStrongest(monsters, count); //function returns an index number of strongest monster
     printf("=== STRONGEST MONSTER ===\n");
     printf("Name: %s\nType: %s\nLevel: %d\nHP: %d\nAttack: %d\nDefense: %d\n\n", monsters[strongestIndex].name, monsters[strongestIndex].type, monsters[strongestIndex].level, monsters[strongestIndex].hp, monsters[strongestIndex].attack, monsters[strongestIndex].defense);
 }
