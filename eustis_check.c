@@ -24,7 +24,7 @@ int main(int argc, char *argv[]){
     fptr = fopen(argv[1], "r");
     if(fptr == NULL)
     {
-        printf("Error: cannot open file %s\n", argv[1]);
+        printf("Error: cannot open file '%s'\n", argv[1]);
         return 1;
     }
     printf("File contents: \n");
