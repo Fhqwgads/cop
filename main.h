@@ -7,7 +7,7 @@
 typedef struct { 
     char name[MAXSTRLEN+1]; 
     char type[MAXSTRLEN+1]; 
-    int level; 
+    int level;  hg
     int hp; 
     int attack; 
     int defense; 
