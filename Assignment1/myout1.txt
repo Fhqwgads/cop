@@ -34,4 +34,3 @@ Cerulean
 1-Psyduck
 2-Squirtle
 5-Snorlax
-

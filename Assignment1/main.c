@@ -251,9 +251,13 @@ void processInputs(monster** monsterList, int monsterCount, region** regionList,
                 {
                     printf("%d-" , processCaptures(trainerList, i, j, k));
                     printf("%s\n", trainerList[i].visits->regions[j]->monsters[k]->name);
+                    
                 }
-               
             }
+        }
+        if(i == trainerCount -1)
+        {
+            return;
         }
         printf("\n");
     }
@@ -286,6 +290,7 @@ void releaseMemory(monster** monsterList, int monsterCount, region** regionList,
     {
         free(regionList[i]->name);
         free(regionList[i]->monsters);
+        free(regionList[i]);
     }
     free(regionList);
     for(int i = 0; i < trainerCount; i++)

@@ -15,4 +15,3 @@ Volcano
 3-Growlithe
 1-Ponyta
 2-Magmar
-
