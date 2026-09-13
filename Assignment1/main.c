@@ -126,8 +126,8 @@ region** readRegions(int *countRegions, monster** monsterList, int monsterCount)
         perror("malloc failed.");
         return NULL;
     }
-    char name[50];
-    char scanMon[50];//temp char array to scan and test the input against the monsterList 
+    char name[50 + 1];
+    char scanMon[50 + 1];//temp char array to scan and test the input against the monsterList 
 
     
     for(int i = 0; i < *countRegions; i++)//iterates through the regions i
