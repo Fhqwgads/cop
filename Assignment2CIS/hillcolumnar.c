@@ -34,7 +34,7 @@ void columnarDecrypt(char* keyFile, char* cypherTextFile);
 void combineEncrypt(char* keyFile, char* plainTextFile);
 void freeMemory(int** key);
 
-void fail(char* error);
+static void fail(char* error);
 
 int main(int argc, char *argv[])
 {
@@ -42,10 +42,12 @@ int main(int argc, char *argv[])
     {
         fail("Wrong number of arguments.");
     }
-    if(strcmp(argv[1], "hill" ))
+
+    if(!strcmp(argv[1], "hill" ))
     {
         hillEncrypt(argv[3], argv[5]);
     }
+
 
 }
 
@@ -114,15 +116,16 @@ void hillEncrypt(char* keyFile, char* plainTextFile)
         fail("Empty plaintext file.");
     }
     int *plainText;
-        
-    while(fgetc(fptr) != EOF)
+    char ch;
+    int i = 0;
+    while((ch = fgetc(fptr)) != EOF)
     {
-        if(isalpha(fgetc(fptr)))
+        if(isalpha(ch))
         {
-            
+            toupper(ch);
+            plainText[i] = ch;
+            i++;
         }
     }
     
-
-
 }
