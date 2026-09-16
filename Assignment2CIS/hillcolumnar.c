@@ -26,6 +26,7 @@ Due Date: See Webcourses
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <ctype.h>
 
 void hillEncrypt(char* keyFile, char* plainTextFile);
 void columnarEncrypt(char* keyFile, char* plainTextFile);
@@ -113,5 +114,15 @@ void hillEncrypt(char* keyFile, char* plainTextFile)
         fail("Empty plaintext file.");
     }
     int *plainText;
+        
+    while(fgetc(fptr) != EOF)
+    {
+        if(isalpha(fgetc(fptr)))
+        {
+            
+        }
+    }
     
+
+
 }
