@@ -60,17 +60,18 @@ static void fail(char * error)
 void hillEncrypt(char* keyFile, char* plainTextFile)
 {    
     FILE* fptr = fopen(keyFile, "r");
+    FILE* eofptr = fopen(keyFile, "r");
     if (fptr == NULL)
     {
         fail("Key file unable to be opened.");        
     }
-    if(fgetc(fptr) == EOF)
+    if(fgetc(eofptr) == EOF)
     {
         fail("Empty key file.");
     }
-    int temp = 0;
     int n = 0;
-    fscanf(fptr, "%d", &n);
+    fscanf(fptr, "%d", &n); 
+    int temp = 0;
     if(n < 1 || n > 9)
     {
         fail("n is outside bounds (1-9)");
@@ -93,39 +94,80 @@ void hillEncrypt(char* keyFile, char* plainTextFile)
     {
         for (int j = 0; j < n; j++)
         {
-            if(fscanf(fptr, "%d", &temp) == 1)
-            {
-                key[i][j] = temp % 26;
-            }
-            else
-            {
-                fail("Early EOF or non integer value found.");
-            }
+            fscanf(fptr, "%d", &temp);
+            key[i][j] = temp % 26;   
         }
     }
     fclose(fptr);
-    
+    fclose(eofptr);
     
     fptr = fopen(plainTextFile, "r");
+    eofptr = fopen(plainTextFile, "r");
     if (fptr == NULL)
     {
         fail("Plaintext file could not be opened.");
     }
-    if(fgetc(fptr) == EOF)
-    {
-        fail("Empty plaintext file.");
-    }
-    int *plainText;
-    char ch;
+    char *originalText = malloc(sizeof(char));
+    char *preProcessText = malloc(sizeof(char));
+    int *plainTextNumbers = malloc(sizeof(int));
     int i = 0;
-    while((ch = fgetc(fptr)) != EOF)
+    while((fgetc(eofptr)) != EOF)
     {
-        if(isalpha(ch))
+        preProcessText[i] = fgetc(fptr);
+        originalText[i] = preProcessText[i];
+        if(isalpha(preProcessText[i]))
         {
-            toupper(ch);
-            plainText[i] = ch;
-            i++;
+            preProcessText[i] = toupper(preProcessText[i]);
+        }
+        i++;
+    }
+    fclose(fptr);
+    fclose(eofptr);
+
+    printf("Mode: \nhill encrypt Hill Cipher, Encryption\n\n");
+
+    printf("Original Text: \n");
+    printf("%s\n\n", originalText);
+
+    printf("Preprocessed Text: \n");
+    for(int i = 0; i < strlen(preProcessText); i++)
+    {
+        if(i%80 == 0)
+        {
+            printf("\n");
+        }
+        printf("%c", preProcessText[i]);
+        i++;
+    }
+
+    printf("\n\nHill Cipher Key Dimension: \n");
+    printf("%d\n\n", n);
+    
+    printf("Hill Cipher Key Matrix:");
+    for(int i = 0; i < n; i++)
+    {
+        printf("\n");
+        for(int j = 0; j < n; j++)
+        {
+            printf("%4d", key[i][j]);
         }
     }
+    printf("\n");
+    printf("Padded Hill Cipher Plaintext: \n");
+    int len = strlen(preProcessText);
+    if(len % n != 0)
+    {
+        for(int i = 0; i < len % n; i++)
+        {
+            preProcessText[len + i] = 'X';
+        }
+        preProcessText[len + (len % n)] = '\0';
+    }
+    printf("%s\n\n", preProcessText);
+
+    printf("Padded Hill Cipher Plaintext as Numbers: \n");
     
+    printf("Hill Cipher Block Trace: \n");
+    printf("Ciphertext after Hill Cipher: \n");
+
 }
